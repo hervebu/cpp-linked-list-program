@@ -79,16 +79,39 @@ class linkedList {
 			display();
 		}
 		
+		void delete_given_number(int number){
+		  struct node *previous, *current;
+		  while(head != NULL && head ->data == number){
+		    previous = head;
+		    head = head ->next;
+		    delete(previous);
+		    cout<<"The number has been deleted successfully!\n";
+		    return;
+			  }
+			  previous = NULL;
+			  current = head;
+			  while(current != NULL){
+		    if(current ->data == number){
+			if(previous !=NULL)
+			    previous ->next = current ->next;
+			delete(current);
+			cout<<"The number has been deleted successfully!\n";
+			return;
+		    }
+		    previous = current;
+		    current = current->next;
+		  }
 
+		}
 
 		void reverse_list() {
-			if (head == NULL) return;
+		    if (head == NULL) return;
 			
 		    node *temp = new node;
 		    node *prev = new node;
 		    node *current = new node;
 		    
-			temp = NULL;
+		    temp = NULL;
 		    prev = NULL;
 		    current = head;
 		    while(current != NULL) {
@@ -100,7 +123,34 @@ class linkedList {
 		    head = prev;
 		}
 		
-		
+		void removeDuplicate() {  
+		    node *current = new node;
+		    node *index = new node;
+		    node *temp = new node;
+		   current = head,  index = NULL, temp = NULL;  
+		      
+		    if(head == NULL) {  
+		        return;  
+		    }  
+		    else {  
+		        while(current != NULL){    
+		            temp = current;   
+		            index = current->next;  
+		              
+		            while(index != NULL) {    
+		                if(current->data == index->data) {   
+		                    temp->next = index->next;  
+		                }  
+		                else {  
+		                    temp = index;  
+		                }  
+		                index = index->next;  
+		            }  
+		            current = current->next;  
+		        } 
+				display();         
+		    }  
+		}  
 
 		void search(){  
 		    node *ptr = new node;  
@@ -152,8 +202,8 @@ int main() {
         cout<<"3.Display Linked List"<<endl;
         cout<<"4.Search Element"<<endl;
         cout<<"5.Reverse Linked List "<<endl;
-		cout<<"6.Remove duplicates from the list."<<endl;
-		cout<<"7.Delete a node with a given number"<<endl;
+	cout<<"6.Remove duplicates from the list."<<endl;
+	cout<<"7.Delete a node with a given number"<<endl;
         cout<<"8.Exit "<<endl;
 			
     while (1){
@@ -163,7 +213,7 @@ int main() {
         {
         case 1:
             cout<<"Enter the number to insert at the front:"<<endl;
-			cin>>insertedNum;
+	    cin>>insertedNum;
             List.insert_node_at_front (insertedNum);
             cout<<endl;
             break;
@@ -187,9 +237,13 @@ int main() {
             break;
         case 6:
             cout<<"Removing duplicates....."<<endl;
+            List.removeDuplicate();
+            cout<<endl;
             break;
         case 7:
             cout<<"\nEnter a number you want to delete: "<<endl;
+            cin>>insertedNum;
+            List.delete_given_number(insertedNum);
             break;            
         case 8:
             cout<<"Exiting..."<<endl;
